@@ -9,11 +9,9 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
     queueGroupName: string = queueGroupName;
 
     async onMessage(data: TicketCreatedEvent['data'], msg: Message) {
-
-        console.log("Ticket Craeted Event Received", data);
         
         const { id, title, price } = data;
-        const exist = Ticket.findById(id);
+        const exist = await Ticket.findById(id);
         if(!!exist) {
             console.log('ticket exist!', exist);
             msg.ack();
